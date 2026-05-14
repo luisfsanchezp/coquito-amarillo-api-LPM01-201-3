@@ -1,0 +1,30 @@
+{
+  "name": "feuture-deicy-palacios",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    
+  "start": "node src/app.js",
+  "dev": "nodemon src/app.js"
+},
+  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deicy-p/feuture-deicy-palacios.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Deicy-p/feuture-deicy-palacios/issues"
+  },
+  "homepage": "https://github.com/Deicy-p/feuture-deicy-palacios#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
