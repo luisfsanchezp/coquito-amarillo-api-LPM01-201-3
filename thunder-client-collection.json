@@ -1,0 +1,150 @@
+{
+  "clientName": "Thunder Client",
+  "collectionName": "ProvvTecno API — Colección Thunder Client",
+  "collectionId": "pv-provvtecno-2026",
+  "dateExported": "2026-05-05",
+  "version": "1.2",
+  "folders": [
+    { "id": "f1", "name": "Productos" },
+    { "id": "f2", "name": "Pedidos" },
+    { "id": "f3", "name": "Pagos PSE" }
+  ],
+  "requests": [
+    {
+      "id": "r01", "colId": "pv-provvtecno-2026", "containerId": "f1",
+      "name": "GET — Listar todos los productos",
+      "url": "http://localhost:4000/api/productos",
+      "method": "GET", "headers": [], "body": { "type": "none" }
+    },
+    {
+      "id": "r02", "colId": "pv-provvtecno-2026", "containerId": "f1",
+      "name": "GET — Filtrar por categoria=accesorios",
+      "url": "http://localhost:4000/api/productos",
+      "method": "GET",
+      "params": [{ "name": "categoria", "value": "accesorios" }],
+      "body": { "type": "none" }
+    },
+    {
+      "id": "r03", "colId": "pv-provvtecno-2026", "containerId": "f1",
+      "name": "GET — Obtener producto por ID",
+      "url": "http://localhost:4000/api/productos/prod-001",
+      "method": "GET", "body": { "type": "none" }
+    },
+    {
+      "id": "r04", "colId": "pv-provvtecno-2026", "containerId": "f1",
+      "name": "GET — Producto no encontrado (404)",
+      "url": "http://localhost:4000/api/productos/prod-999",
+      "method": "GET", "body": { "type": "none" }
+    },
+    {
+      "id": "r05", "colId": "pv-provvtecno-2026", "containerId": "f1",
+      "name": "POST — Crear producto válido (201)",
+      "url": "http://localhost:4000/api/productos",
+      "method": "POST",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"nombre\": \"Audífonos Bluetooth ProvvTecno\",\n  \"descripcion\": \"Audífonos over-ear con cancelación de ruido activa, 30h batería.\",\n  \"precio\": 220000,\n  \"stock\": 25,\n  \"categoria\": \"accesorios\",\n  \"imagen_url\": \"https://provvtecno.com/img/audifonos.jpg\"\n}"
+      }
+    },
+    {
+      "id": "r06", "colId": "pv-provvtecno-2026", "containerId": "f1",
+      "name": "POST — Crear producto inválido (400)",
+      "url": "http://localhost:4000/api/productos",
+      "method": "POST",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"precio\": 5000,\n  \"categoria\": \"ropa\"\n}"
+      }
+    },
+    {
+      "id": "r07", "colId": "pv-provvtecno-2026", "containerId": "f1",
+      "name": "PUT — Actualizar producto",
+      "url": "http://localhost:4000/api/productos/prod-001",
+      "method": "PUT",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"precio\": 50000,\n  \"stock\": 100\n}"
+      }
+    },
+    {
+      "id": "r08", "colId": "pv-provvtecno-2026", "containerId": "f1",
+      "name": "DELETE — Eliminar producto (204)",
+      "url": "http://localhost:4000/api/productos/prod-005",
+      "method": "DELETE", "body": { "type": "none" }
+    },
+    {
+      "id": "r09", "colId": "pv-provvtecno-2026", "containerId": "f2",
+      "name": "GET — Listar todos los pedidos",
+      "url": "http://localhost:4000/api/pedidos",
+      "method": "GET", "body": { "type": "none" }
+    },
+    {
+      "id": "r10", "colId": "pv-provvtecno-2026", "containerId": "f2",
+      "name": "GET — Obtener pedido por ID",
+      "url": "http://localhost:4000/api/pedidos/ped-001",
+      "method": "GET", "body": { "type": "none" }
+    },
+    {
+      "id": "r11", "colId": "pv-provvtecno-2026", "containerId": "f2",
+      "name": "POST — Crear pedido válido (201)",
+      "url": "http://localhost:4000/api/pedidos",
+      "method": "POST",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"cliente\": {\n    \"nombre\": \"Juan Pablo Herrera\",\n    \"email\": \"jpherrera@correo.com\",\n    \"telefono\": \"3124567890\",\n    \"direccion\": \"Calle 80 #45-20, Robledo, Medellín\"\n  },\n  \"productos\": [\n    {\n      \"producto_id\": \"prod-002\",\n      \"cantidad\": 1,\n      \"precio_unitario\": 185000\n    },\n    {\n      \"producto_id\": \"prod-004\",\n      \"cantidad\": 2,\n      \"precio_unitario\": 98000\n    }\n  ],\n  \"metodo_pago\": \"PSE\",\n  \"notas\": \"Factura a nombre de la empresa\"\n}"
+      }
+    },
+    {
+      "id": "r12", "colId": "pv-provvtecno-2026", "containerId": "f2",
+      "name": "PATCH — Actualizar estado pedido",
+      "url": "http://localhost:4000/api/pedidos/ped-001/estado",
+      "method": "PATCH",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": { "type": "json", "raw": "{\n  \"estado\": \"ENVIADO\"\n}" }
+    },
+    {
+      "id": "r13", "colId": "pv-provvtecno-2026", "containerId": "f3",
+      "name": "GET — Bancos habilitados PSE",
+      "url": "http://localhost:4000/api/pagos-pse/bancos",
+      "method": "GET", "body": { "type": "none" }
+    },
+    {
+      "id": "r14", "colId": "pv-provvtecno-2026", "containerId": "f3",
+      "name": "POST — Iniciar transacción PSE (200)",
+      "url": "http://localhost:4000/api/pagos-pse",
+      "method": "POST",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"banco_codigo\": \"1007\",\n  \"tipo_persona\": \"N\",\n  \"tipo_documento\": \"CC\",\n  \"numero_documento\": \"1098765432\",\n  \"monto\": 210000,\n  \"descripcion\": \"Compra tienda ProvvTecno - Pedido #PV-2026-0002\",\n  \"url_respuesta\": \"https://provvtecno.com/pagos/respuesta\",\n  \"url_confirmacion\": \"https://provvtecno.com/pagos/confirmacion\"\n}"
+      }
+    },
+    {
+      "id": "r15", "colId": "pv-provvtecno-2026", "containerId": "f3",
+      "name": "POST — PSE monto inválido (400)",
+      "url": "http://localhost:4000/api/pagos-pse",
+      "method": "POST",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"banco_codigo\": \"1007\",\n  \"tipo_persona\": \"N\",\n  \"tipo_documento\": \"CC\",\n  \"numero_documento\": \"1098765432\",\n  \"monto\": 500,\n  \"descripcion\": \"Prueba monto inválido\",\n  \"url_respuesta\": \"https://provvtecno.com/pagos/respuesta\"\n}"
+      }
+    },
+    {
+      "id": "r16", "colId": "pv-provvtecno-2026", "containerId": "f3",
+      "name": "GET — Consultar transacción existente",
+      "url": "http://localhost:4000/api/pagos-pse/TXN-20260421-001",
+      "method": "GET", "body": { "type": "none" }
+    },
+    {
+      "id": "r17", "colId": "pv-provvtecno-2026", "containerId": "f3",
+      "name": "GET — Transacción inexistente (404)",
+      "url": "http://localhost:4000/api/pagos-pse/TXN-0000-FAKE",
+      "method": "GET", "body": { "type": "none" }
+    }
+  ]
+}

@@ -1,89 +1,57 @@
+'use strict';
+
+require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
+const cors    = require('cors');
 
-const app = express();
+const productosRouter = require('./routes/productos.routes');
+const pedidosRouter   = require('./routes/pedidos.routes');
+const pagosPseRouter  = require('./routes/pagosPse.routes');
+const { errorHandler, notFound } = require('./middlewares/errorHandler');
+const requestLogger = require('./middlewares/requestLogger');
 
-const productRoutes = require('./routes/productRoutes');
-const orderRoutes = require('./routes/orderRoutes');
-const pseRoutes = require('./routes/pseRoutes');
+const app  = express();
+const PORT = process.env.PORT || 4000;
 
+// ─── Middlewares globales ─────────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(requestLogger);
 
-app.get('/', (req, res) => {
-  res.send('API funcionando');
-});
-
-app.use('/api/productos', productRoutes);
-app.use('/api/pedidos', orderRoutes);
-app.use('/api/pagos-pse', pseRoutes);
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Servidor en puerto ${PORT}`);
-});
-app.use((err, req, res, next) => {
-  res.status(err.status || 500).json({
-    message: err.message || 'Error interno del servidor'
+// ─── Ruta raíz ────────────────────────────────────────────────────────────────
+app.get('/', (_req, res) => {
+  res.json({
+    empresa  : 'ProvvTecno',
+    api      : 'Tienda Virtual REST API',
+    version  : 'v1.0.0',
+    estado   : 'activa',
+    endpoints: {
+      productos: '/api/productos',
+      pedidos  : '/api/pedidos',
+      pagosPse : '/api/pagos-pse'
+    }
   });
 });
-module.exports = app;
-const app = express();
 
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Ruta de prueba
-app.get('/', (req, res) => {
-  res.send('API Coquito Amarillo funcionando');
-});
-
-// IMPORTAR RUTAS
-const productosRouter = require('./routes/productos');
-const pedidosRoutes = require('./routes/pedidos');
-const pagosPseRoutes = require('./routes/pagos-pse');
-
-// USAR RUTAS
+// ─── Rutas de la API ──────────────────────────────────────────────────────────
 app.use('/api/productos', productosRouter);
-app.use('/api/pedidos', pedidosRoutes);
-app.use('/api/pagos-pse', pagosPseRoutes);
+app.use('/api/pedidos',   pedidosRouter);
+app.use('/api/pagos-pse', pagosPseRouter);
 
-// Puerto
-const PORT = process.env.PORT || 3000;
+// ─── Manejo de errores ────────────────────────────────────────────────────────
+app.use(notFound);
+app.use(errorHandler);
 
-// Levantar servidor (SIEMPRE AL FINAL)
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
-const path = require('path');
-const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-const productosRouter = require('./routes/productos');
-const pedidosRouter = require('./routes/pedidos');
-const pseRouter = require('./routes/pagos');
-const personasRouter = require('./routes/personas');
-
-app.use('/api/productos', productosRouter);
-app.use('/api/pedidos', pedidosRouter);
-app.use('/api/pagos-pse', pseRouter);
-app.use('/api/personas', personasRouter);
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.use((err, req, res, next) => {
-  res.status(err.status || 500).json({ error: err.message });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor escuchando en puerto ${PORT}`));
+// ─── Iniciar servidor ─────────────────────────────────────────────────────────
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('  💻  ProvvTecno — API REST iniciada');
+    console.log(`  🚀  Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`  📋  Documentación: http://localhost:${PORT}/`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  });
+}
 
 module.exports = app;
